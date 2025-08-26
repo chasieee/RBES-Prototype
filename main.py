@@ -3,7 +3,7 @@ from facts import *
 from rules import RecruitmentEngine
 from ui import ask_question, collect_candidate_info
 from report import generate_report
-from mappings import MAPPING
+from mappings import MAPPING, HS_SCORING
 
 def main():
     # 1. Input kandidat
@@ -140,49 +140,64 @@ def main():
     engine.reset()
     engine.results = []   # tempat nyimpen hasil keputusan
     
+    # inisialisasi flag livecoding
+    engine.declare(Fact(FA13=False), Fact(FA14=False), Fact(FA15=False))
+    # inisialisasi flag softskill
+    engine.declare(Fact(FA10=False), Fact(FA11=False))
+    # inisialisasi flag tambahan
+    engine.declare(Fact(FA16=False), Fact(FA17=False), Fact(FA18=False))
+
     # declare kandidat
     engine.declare(Candidate(nama=info["nama"], posisi=info["posisi"]))
 
-    # declare screening
-    engine.declare(Screening(FS1=answers["Personality"]["kode"],
-                            FS2=answers["Tes Tertulis"]["kode"]))
+    # declare screening - PERBAIKAN: gunakan Fact() langsung
+    engine.declare(Fact(FS1=answers["Personality"]["kode"]))
+    engine.declare(Fact(FS2=answers["Tes Tertulis"]["kode"]))
 
-    # declare hard skill
-    engine.declare(HardSkill(HS1=answers["Pemrograman"]["kode"],
-                            HS2=answers["Database MySQL"]["kode"],
-                            HS3=answers["Framework"]["kode"],
-                            HS4=answers["Unit Test"]["kode"],
-                            HS5=answers["SDLC"]["kode"],
-                            HS6=answers["Design Pattern"]["kode"],
-                            HS7=answers["Microservice"]["kode"],
-                            HS8=answers["Docker"]["kode"],
-                            HS9=answers["CI/CD"]["kode"],
-                            HS10=answers["Cloud"]["kode"],
-                            HS11=answers["Payment Gateway"]["kode"]))
+    # Hitung skor hard skill
+    hs_score = sum(
+        HS_SCORING[answers[q]["kode"]] 
+        for q in ["Pemrograman", "Database MySQL", "Framework", "Unit Test",
+        "SDLC", "Design Pattern", "Microservice", "Docker", "CI/CD",
+        "Cloud", "Payment Gateway"] 
+        if answers[q]["kode"] in HS_SCORING
+    )
 
-    # declare soft skill
-    engine.declare(SoftSkill(SS1=answers["Problem Solving"]["kode"],
-                            SS2=answers["Komunikasi"]["kode"],
-                            SS3=answers["Adaptasi"]["kode"]))
+    # Declare posisi dan bobot untuk hard skill rules
+    engine.declare(Fact(posisi=info["posisi"]))
+    engine.declare(Fact(bobot_total=hs_score))
 
-    # declare live coding
-    engine.declare(LiveCoding(LC1=answers["Live Coding - Dasar Pemrograman"]["kode"],
-                            LC2=answers["Live Coding - Problem Solving"]["kode"],
-                            LC3=answers["Live Coding - Kualitas Kode"]["kode"]))
+    # declare soft skill - PERBAIKAN: gunakan Fact() langsung
+    engine.declare(Fact(SS1=answers["Problem Solving"]["kode"]))
+    engine.declare(Fact(SS2=answers["Komunikasi"]["kode"]))
+    engine.declare(Fact(SS3=answers["Adaptasi"]["kode"]))
 
-    # declare faktor tambahan
-    engine.declare(Tambahan(FT1=answers["Development Tools"]["kode"],
-                                FT2=answers["Jam Aktif"]["kode"],
-                                FT3=answers["Career Path"]["kode"],
-                                FT4=answers["Sertifikasi"]["kode"]))
+    # declare live coding - PERBAIKAN: gunakan Fact() langsung
+    engine.declare(Fact(LC1=answers["Live Coding - Dasar Pemrograman"]["kode"]))
+    engine.declare(Fact(LC2=answers["Live Coding - Problem Solving"]["kode"]))
+    engine.declare(Fact(LC3=answers["Live Coding - Kualitas Kode"]["kode"]))
 
+    # declare faktor tambahan - PERBAIKAN: gunakan Fact() langsung
+    engine.declare(Fact(FT1=answers["Development Tools"]["kode"]))
+    engine.declare(Fact(FT2=answers["Jam Aktif"]["kode"]))
+    engine.declare(Fact(FT3=answers["Career Path"]["kode"]))
+    engine.declare(Fact(FT4=answers["Sertifikasi"]["kode"]))
 
+    print("\n=== MENJALANKAN EXPERT SYSTEM ===")
+    
+    # DEBUG: Print facts sebelum run
+    from debug_facts import debug_facts
+    debug_facts(engine)
+    
     engine.run()
+    
+    print(f"\nTotal rules triggered: {len(engine.triggered_rules)}")
+    print(f"Total results: {len(engine.results)}")
 
-    # 4. Simpan hasil (sementara print)
+    # 4. Simpan hasil
     results = engine.results if hasattr(engine, "results") else []
-
-    generate_report(info, answers, results)
+    
+    generate_report(info, answers, engine.results, engine.triggered_rules, hs_score)
 
 if __name__ == "__main__":
     main()

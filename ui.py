@@ -7,6 +7,7 @@ def ask_question(prompt, choices):
     return {"kode": choices[ans]['kode'], "note": note}
 
 def collect_candidate_info():
-    nama = input("Masukkan nama kandidat: ")
+    print("\n===== SISTEM PAKAR =====\n")
+    nama = input("\nMasukkan nama kandidat: ")
     posisi = input("Posisi yang dilamar (junior/middle): ").lower()
     return {"nama": nama, "posisi": posisi}
