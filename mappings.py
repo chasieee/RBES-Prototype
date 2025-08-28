@@ -2,9 +2,9 @@
 
 MAPPING = {
     # === Screening ===
-    "FS1-1": "Personality Baik",
-    "FS1-2": "Personality Kurang",
-    "FS1-3": "Personality Buruk/Parah",
+    "FS1-1": "Personality test Baik",
+    "FS1-2": "Personality test Kurang",
+    "FS1-3": "Personality test Buruk/Parah",
 
     "FS2-1": "Tes Tertulis Bagus (≥80%)",
     "FS2-2": "Tes Tertulis Baik (60–79%)",

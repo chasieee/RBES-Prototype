@@ -12,86 +12,86 @@ def main():
     # 2. Pertanyaan contoh (nanti diisi semua sesuai tabel)
     questions = {
         # === Screening ===
-        "Personality": {
+        "Screening - Personality": {
             "A": {"text": MAPPING["FS1-1"], "kode": "FS1-1"},
             "B": {"text": MAPPING["FS1-2"], "kode": "FS1-2"},
             "C": {"text": MAPPING["FS1-3"], "kode": "FS1-3"},
         },
-        "Tes Tertulis": {
+        "Screening - Tes Tertulis": {
             "A": {"text": MAPPING["FS2-1"], "kode": "FS2-1"},
             "B": {"text": MAPPING["FS2-2"], "kode": "FS2-2"},
             "C": {"text": MAPPING["FS2-3"], "kode": "FS2-3"},
         },
 
         # === Hard Skills ===
-        "Pemrograman": {
+        "Hard Skill - Pemrograman": {
             "A": {"text": MAPPING["HS1-1"], "kode": "HS1-1"},
             "B": {"text": MAPPING["HS1-2"], "kode": "HS1-2"},
             "C": {"text": MAPPING["HS1-3"], "kode": "HS1-3"},
         },
-        "Database MySQL": {
+        "Hard Skill - Database MySQL": {
             "A": {"text": MAPPING["HS2-1"], "kode": "HS2-1"},
             "B": {"text": MAPPING["HS2-2"], "kode": "HS2-2"},
             "C": {"text": MAPPING["HS2-3"], "kode": "HS2-3"},
         },
-        "Framework": {
+        "Hard Skill - Framework": {
             "A": {"text": MAPPING["HS3-1"], "kode": "HS3-1"},
             "B": {"text": MAPPING["HS3-2"], "kode": "HS3-2"},
             "C": {"text": MAPPING["HS3-3"], "kode": "HS3-3"},
         },
-        "Unit Test": {
+        "Hard Skill - Unit Test": {
             "A": {"text": MAPPING["HS4-1"], "kode": "HS4-1"},
             "B": {"text": MAPPING["HS4-2"], "kode": "HS4-2"},
             "C": {"text": MAPPING["HS4-3"], "kode": "HS4-3"},
         },
-        "SDLC": {
+        "Hard Skill - SDLC": {
             "A": {"text": MAPPING["HS5-1"], "kode": "HS5-1"},
             "B": {"text": MAPPING["HS5-2"], "kode": "HS5-2"},
             "C": {"text": MAPPING["HS5-3"], "kode": "HS5-3"},
         },
-        "Design Pattern": {
+        "Hard Skill - Design Pattern": {
             "A": {"text": MAPPING["HS6-1"], "kode": "HS6-1"},
             "B": {"text": MAPPING["HS6-2"], "kode": "HS6-2"},
             "C": {"text": MAPPING["HS6-3"], "kode": "HS6-3"},
         },
-        "Microservice": {
+        "Hard Skill - Microservice": {
             "A": {"text": MAPPING["HS7-1"], "kode": "HS7-1"},
             "B": {"text": MAPPING["HS7-2"], "kode": "HS7-2"},
             "C": {"text": MAPPING["HS7-3"], "kode": "HS7-3"},
         },
-        "Docker": {
+        "Hard Skill - Docker": {
             "A": {"text": MAPPING["HS8-1"], "kode": "HS8-1"},
             "B": {"text": MAPPING["HS8-2"], "kode": "HS8-2"},
             "C": {"text": MAPPING["HS8-3"], "kode": "HS8-3"},
         },
-        "CI/CD": {
+        "Hard Skill - CI/CD": {
             "A": {"text": MAPPING["HS9-1"], "kode": "HS9-1"},
             "B": {"text": MAPPING["HS9-2"], "kode": "HS9-2"},
             "C": {"text": MAPPING["HS9-3"], "kode": "HS9-3"},
         },
-        "Cloud": {
+        "Hard Skill - Cloud": {
             "A": {"text": MAPPING["HS10-1"], "kode": "HS10-1"},
             "B": {"text": MAPPING["HS10-2"], "kode": "HS10-2"},
             "C": {"text": MAPPING["HS10-3"], "kode": "HS10-3"},
         },
-        "Payment Gateway": {
+        "Hard Skill - Payment Gateway": {
             "A": {"text": MAPPING["HS11-1"], "kode": "HS11-1"},
             "B": {"text": MAPPING["HS11-2"], "kode": "HS11-2"},
             "C": {"text": MAPPING["HS11-3"], "kode": "HS11-3"},
         },
 
         # === Soft Skills ===
-        "Problem Solving": {
+        "Soft Skill - Problem Solving": {
             "A": {"text": MAPPING["SS1-1"], "kode": "SS1-1"},
             "B": {"text": MAPPING["SS1-2"], "kode": "SS1-2"},
             "C": {"text": MAPPING["SS1-3"], "kode": "SS1-3"},
         },
-        "Komunikasi": {
+        "Soft Skill - Komunikasi": {
             "A": {"text": MAPPING["SS2-1"], "kode": "SS2-1"},
             "B": {"text": MAPPING["SS2-2"], "kode": "SS2-2"},
             "C": {"text": MAPPING["SS2-3"], "kode": "SS2-3"},
         },
-        "Adaptasi": {
+        "Soft Skill - Adaptasi": {
             "A": {"text": MAPPING["SS3-1"], "kode": "SS3-1"},
             "B": {"text": MAPPING["SS3-2"], "kode": "SS3-2"},
             "C": {"text": MAPPING["SS3-3"], "kode": "SS3-3"},
@@ -113,19 +113,19 @@ def main():
         },
 
         # === Faktor Tambahan ===
-        "Development Tools": {
+        "Faktor Tambahan - Development Tools": {
             "A": {"text": MAPPING["FT1-1"], "kode": "FT1-1"},
             "B": {"text": MAPPING["FT1-2"], "kode": "FT1-2"},
         },
-        "Jam Aktif": {
+        "Faktor Tambahan - Jam Aktif": {
             "A": {"text": MAPPING["FT2-1"], "kode": "FT2-1"},
             "B": {"text": MAPPING["FT2-2"], "kode": "FT2-2"},
         },
-        "Career Path": {
+        "Faktor Tambahan - Career Path": {
             "A": {"text": MAPPING["FT3-1"], "kode": "FT3-1"},
             "B": {"text": MAPPING["FT3-2"], "kode": "FT3-2"},
         },
-        "Sertifikasi": {
+        "Faktor Tambahan - Sertifikasi": {
             "A": {"text": MAPPING["FT4-1"], "kode": "FT4-1"},
             "B": {"text": MAPPING["FT4-2"], "kode": "FT4-2"},
         },
@@ -134,6 +134,15 @@ def main():
     answers = {}
     for q, ch in questions.items():
         answers[q] = ask_question(q, ch)
+    # try:
+    #     for q, ch in questions.items():
+    #         print(f"\nMemproses pertanyaan: {q}")
+    #         answers[q] = ask_question(q, ch)
+    #         print(f"✓ Jawaban tersimpan: {answers[q]}")
+    # except Exception as e:
+    #     print(f"ERROR saat mengumpulkan jawaban: {e}")
+    #     print(f"Answers yang sudah terkumpul: {list(answers.keys())}")
+    #     return
 
     # 3. Jalankan RBES
     engine = RecruitmentEngine()
@@ -151,15 +160,15 @@ def main():
     engine.declare(Candidate(nama=info["nama"], posisi=info["posisi"]))
 
     # declare screening - PERBAIKAN: gunakan Fact() langsung
-    engine.declare(Fact(FS1=answers["Personality"]["kode"]))
-    engine.declare(Fact(FS2=answers["Tes Tertulis"]["kode"]))
+    engine.declare(Fact(FS1=answers["Screening - Personality"]["kode"]))
+    engine.declare(Fact(FS2=answers["Screening - Tes Tertulis"]["kode"]))
 
     # Hitung skor hard skill
     hs_score = sum(
         HS_SCORING[answers[q]["kode"]] 
-        for q in ["Pemrograman", "Database MySQL", "Framework", "Unit Test",
-        "SDLC", "Design Pattern", "Microservice", "Docker", "CI/CD",
-        "Cloud", "Payment Gateway"] 
+        for q in ["Hard Skill - Pemrograman", "Hard Skill - Database MySQL", "Hard Skill - Framework", "Hard Skill - Unit Test",
+        "Hard Skill - SDLC", "Hard Skill - Design Pattern", "Hard Skill - Microservice", "Hard Skill - Docker", "Hard Skill - CI/CD",
+        "Hard Skill - Cloud", "Hard Skill - Payment Gateway"] 
         if answers[q]["kode"] in HS_SCORING
     )
 
@@ -168,9 +177,9 @@ def main():
     engine.declare(Fact(bobot_total=hs_score))
 
     # declare soft skill - PERBAIKAN: gunakan Fact() langsung
-    engine.declare(Fact(SS1=answers["Problem Solving"]["kode"]))
-    engine.declare(Fact(SS2=answers["Komunikasi"]["kode"]))
-    engine.declare(Fact(SS3=answers["Adaptasi"]["kode"]))
+    engine.declare(Fact(SS1=answers["Soft Skill - Problem Solving"]["kode"]))
+    engine.declare(Fact(SS2=answers["Soft Skill - Komunikasi"]["kode"]))
+    engine.declare(Fact(SS3=answers["Soft Skill - Adaptasi"]["kode"]))
 
     # declare live coding - PERBAIKAN: gunakan Fact() langsung
     engine.declare(Fact(LC1=answers["Live Coding - Dasar Pemrograman"]["kode"]))
@@ -178,10 +187,10 @@ def main():
     engine.declare(Fact(LC3=answers["Live Coding - Kualitas Kode"]["kode"]))
 
     # declare faktor tambahan - PERBAIKAN: gunakan Fact() langsung
-    engine.declare(Fact(FT1=answers["Development Tools"]["kode"]))
-    engine.declare(Fact(FT2=answers["Jam Aktif"]["kode"]))
-    engine.declare(Fact(FT3=answers["Career Path"]["kode"]))
-    engine.declare(Fact(FT4=answers["Sertifikasi"]["kode"]))
+    engine.declare(Fact(FT1=answers["Faktor Tambahan - Development Tools"]["kode"]))
+    engine.declare(Fact(FT2=answers["Faktor Tambahan - Jam Aktif"]["kode"]))
+    engine.declare(Fact(FT3=answers["Faktor Tambahan - Career Path"]["kode"]))
+    engine.declare(Fact(FT4=answers["Faktor Tambahan - Sertifikasi"]["kode"]))
 
     print("\n=== MENJALANKAN EXPERT SYSTEM ===")
     
