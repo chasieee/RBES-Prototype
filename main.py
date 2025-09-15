@@ -4,6 +4,7 @@ from rules import RecruitmentEngine
 from ui import ask_question, collect_candidate_info
 from report import generate_report
 from mappings import MAPPING, HS_SCORING, MANDATORY_FACTORS
+from debug_facts import debug_facts, debug_results
 
 def calculate_hardskill_score(answers):
     """Hitung skor hard skill berdasarkan jawaban"""
@@ -235,12 +236,26 @@ def main():
 
     print("\n=== MENJALANKAN DUAL PROCESS INFERENCE ===\n")
     
-    # Run the inference engine
-    engine.run()
+    # DEBUG: Print facts sebelum run
+    debug_facts(engine)
     
-    print(f"\n=== RANGKUMAN PROSES ===")
-    print(f"Total rules triggered: {len(engine.triggered_rules)}")
-    print(f"Level status: {engine.level_status}")
+    try:
+        engine.run()
+        
+        print(f"\n=== RANGKUMAN PROSES ===")
+        print(f"Total rules triggered: {len(engine.triggered_rules)}")
+        print(f"Level status: {engine.level_status}")
+        
+        # Debug results
+        debug_results(engine)
+        
+    except Exception as e:
+        print(f"ERROR saat menjalankan inference engine: {e}")
+        print("Menggunakan hasil fallback...")
+        
+        # Fallback result jika ada error
+        if not engine.results:
+            engine.add_result("Kurang Layak", f"Sistem mengalami error: {str(e)}", "Error")
 
     # 6. Generate report
     generate_report(info, answers, engine.results, engine.triggered_rules, 

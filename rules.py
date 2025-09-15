@@ -95,7 +95,7 @@ class RecruitmentEngine(KnowledgeEngine):
     @Rule(BinaryFlag(level1_pass=True),
           Fact(posisi='junior'), 
           Fact(bobot_total=MATCH.bt), 
-          TEST(lambda bt: 11 <= bt <= 20),
+          TEST(lambda bt: bt is not None and 11 <= bt <= 20),
           Fact(mandatory_junior=True))
     def r10_hardskill_junior_memenuhi(self, bt):
         self.declare(Fact(Kualifikasi_Hardskill="Memenuhi_Junior"))
@@ -107,7 +107,7 @@ class RecruitmentEngine(KnowledgeEngine):
     @Rule(BinaryFlag(level1_pass=True),
           Fact(posisi='junior'), 
           Fact(bobot_total=MATCH.bt), 
-          TEST(lambda bt: bt >= 21),
+          TEST(lambda bt: bt is not None and bt >= 21),
           Fact(mandatory_junior=True),
           Fact(mandatory_middle=True))
     def r10_hardskill_junior_upgrade(self, bt):
@@ -121,7 +121,7 @@ class RecruitmentEngine(KnowledgeEngine):
     @Rule(BinaryFlag(level1_pass=True),
           Fact(posisi='middle'), 
           Fact(bobot_total=MATCH.bt), 
-          TEST(lambda bt: bt >= 21),
+          TEST(lambda bt: bt is not None and bt >= 21),
           Fact(mandatory_middle=True))
     def r11_hardskill_middle_memenuhi(self, bt):
         self.declare(Fact(Kualifikasi_Hardskill="Memenuhi_Middle"))
@@ -130,17 +130,23 @@ class RecruitmentEngine(KnowledgeEngine):
         print(msg)
         self.triggered_rules.append(msg)
 
-    # Hard Skill Tidak Memenuhi
+    # Hard Skill Tidak Memenuhi - DIPERBAIKI
     @Rule(BinaryFlag(level1_pass=True),
           OR(
-              # Junior tidak memenuhi
+              # Junior tidak memenuhi - skor terlalu rendah
               AND(Fact(posisi='junior'),
-                  OR(Fact(bobot_total=MATCH.bt), TEST(lambda bt: bt < 11),
-                     Fact(mandatory_junior=False))),
-              # Middle tidak memenuhi  
+                  Fact(bobot_total=MATCH.bt),
+                  TEST(lambda bt: bt is not None and bt < 11)),
+              # Junior tidak memenuhi - mandatory gagal
+              AND(Fact(posisi='junior'),
+                  Fact(mandatory_junior=False)),
+              # Middle tidak memenuhi - skor terlalu rendah
               AND(Fact(posisi='middle'),
-                  OR(Fact(bobot_total=MATCH.bt), TEST(lambda bt: bt < 21),
-                     Fact(mandatory_middle=False)))
+                  Fact(bobot_total=MATCH.bt),
+                  TEST(lambda bt: bt is not None and bt < 21)),
+              # Middle tidak memenuhi - mandatory gagal
+              AND(Fact(posisi='middle'),
+                  Fact(mandatory_middle=False))
           ))
     def r12_hardskill_tidak_memenuhi(self):
         self.declare(Fact(Kualifikasi_Hardskill="Tidak_Memenuhi"))
@@ -219,8 +225,7 @@ class RecruitmentEngine(KnowledgeEngine):
                   Fact(LC3=MATCH.lc3), TEST(lambda lc3: lc3 in ['LC3-1', 'LC3-2']))
           ),
           salience=9)
-        #   ~Fact(Kualifikasi_Livecoding="sangat_baik"),
-        #   ~Fact(Kualifikasi_Livecoding="cukup_baik"))
+          
     def r18_livecoding_kurang_baik(self):
         self.declare(Fact(Kualifikasi_Livecoding="kurang_baik"))
         self.declare(BinaryFlag(level3_pass=False))
@@ -243,8 +248,7 @@ class RecruitmentEngine(KnowledgeEngine):
         print(msg)
         self.triggered_rules.append(msg)
         self.level_status["Level3"] = "PASS"
-
-
+        
     # ===============================
     # LEVEL 4: NILAI TAMBAHAN (R19-R21)
     # ===============================
