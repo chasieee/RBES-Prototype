@@ -20,8 +20,8 @@ Sistem Pakar berbasis aturan untuk seleksi kandidat Fullstack Developer mengguna
 
 1. **Clone repository ini:**
    ```bash
-   git clone https://github.com/yourusername/rbes-recruitment.git
-   cd rbes-recruitment
+   git clone https://github.com/chasieee/RBES-Prototype.git
+   cd RBES-Prototype
    ```
 
 2. **Install dependencies:**
