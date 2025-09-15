@@ -1,108 +1,137 @@
-# Mapping kode → deskripsi nilai sesuai tabel fakta
+# Mapping sesuai dengan Tabel 4.8-4.12 dari Bab 4
 
 MAPPING = {
-    # === Screening ===
-    "FS1-1": "Personality test Baik",
-    "FS1-2": "Personality test Kurang",
-    "FS1-3": "Personality test Buruk/Parah",
+    # === Screening (Tabel 4.8) ===
+    "FS1-1": "Personality test - Excellent, leadership potential",
+    "FS1-2": "Personality test - Baik, dapat bekerja dalam tim",
+    "FS1-3": "Personality test - Kurang baik, butuh guidance",
+    
+    "FS2-1": "Tes Tertulis - Jawaban Benar ≥ 80%",
+    "FS2-2": "Tes Tertulis - Jawaban Benar 60-79%", 
+    "FS2-3": "Tes Tertulis - Jawaban Benar < 59%",
 
-    "FS2-1": "Tes Tertulis Bagus (≥80%)",
-    "FS2-2": "Tes Tertulis Baik (60–79%)",
-    "FS2-3": "Tes Tertulis Kurang (<60%)",
+    # === Hard Skills (Tabel 4.9) === 
+    "HS1-1": "Bahasa Pemrograman - Master PHP/JS/TS + experienced",
+    "HS1-2": "Bahasa Pemrograman - Mahir 1-2 bahasa + cukup berpengalaman",
+    "HS1-3": "Bahasa Pemrograman - Menguasai dan paham sintaks",
+    
+    "HS2-1": "MySQL - Advanced query + optimization + indexing strategy + able to use PLAIN SQL",
+    "HS2-2": "MySQL - Intermediate + join kompleks + indexing dasar + able to use PLAIN/ORM SQL", 
+    "HS2-3": "MySQL - Basic CRUD + simple join",
+    
+    "HS3-1": "Framework - Master 2+ framework + custom development",
+    "HS3-2": "Framework - Mahir 1 framework",
+    "HS3-3": "Framework - Tidak menguasai / paham konsep framework",
+    
+    "HS4-1": "Unit Testing - Experienced + integration testing",
+    "HS4-2": "Unit Testing - Pernah unit testing + basic coverage",
+    "HS4-3": "Unit Testing - Paham konsep testing / tidak berpengalaman",
+    
+    "HS5-1": "SDLC - Understanding Agile/Scrum + Waterfall + DevOps integration",
+    "HS5-2": "SDLC - Agile / Scrum + basic project management",
+    "HS5-3": "SDLC - Waterfall / basic methodology",
+    
+    "HS6-1": "Design Pattern - Ability to implement MVC + Repository + DDD + SOLID principles",
+    "HS6-2": "Design Pattern - Repository + basic patterns implementation", 
+    "HS6-3": "Design Pattern - Paham konsep design pattern",
+    
+    "HS7-1": "Microservice - Design + implement",
+    "HS7-2": "Microservice - Basic implementation + API gateway",
+    "HS7-3": "Microservice - Paham konsep / tidak berpengalaman",
+    
+    "HS8-1": "Docker - Multi-stage builds + integration + production deploy",
+    "HS8-2": "Docker - Experienced in project / local dev",
+    "HS8-3": "Docker - Paham konsep / tidak berpengalaman",
+    
+    "HS9-1": "CI/CD - Complex pipelines + automated testing + deployment strategies",
+    "HS9-2": "CI/CD - Experienced in basic pipeline setup",
+    "HS9-3": "CI/CD - Paham konsep / tidak berpengalaman",
+    
+    "HS10-1": "Cloud - Experienced in multi-platform",
+    "HS10-2": "Cloud - 1 platform (limited experience) + basic services",
+    "HS10-3": "Cloud - Paham konsep / tidak berpengalaman",
+    
+    "HS11-1": "Payment Gateway - Experienced in multiple gateways",
+    "HS11-2": "Payment Gateway - Limited experience",
+    "HS11-3": "Payment Gateway - Paham konsep / tidak berpengalaman",
 
-    # === Hard Skills ===
-    "HS1-1": "Pemrograman Mahir (PHP/JS/TS)",
-    "HS1-2": "Pemrograman Cukup (salah satu/kurang pengalaman)",
-    "HS1-3": "Pemrograman Kurang",
+    # === Soft Skills (Tabel 4.10) ===
+    "SS1-1": "Problem Solving - Mandiri + creative solutions + team discussion",
+    "SS1-2": "Problem Solving - Self-research + systematic approach", 
+    "SS1-3": "Problem Solving - Need a time + Butuh guidance + basic troubleshooting",
+    
+    "SS2-1": "Komunikasi - Jelas + interaktif + responsive",
+    "SS2-2": "Komunikasi - Jelas + passive",
+    "SS2-3": "Komunikasi - Basic communication + too passive + perlu improvement",
+    
+    "SS3-1": "Adaptabilitas - Quick learner + embrace change",
+    "SS3-2": "Adaptabilitas - Normal adaptation (< 1 week) + willing to learn",
+    "SS3-3": "Adaptabilitas - Slow adaptation (> 2 week) + need support",
 
-    "HS2-1": "MySQL Advanced (optimasi query, indexing)",
-    "HS2-2": "MySQL Intermediate (join, indexing dasar)",
-    "HS2-3": "MySQL Basic (CRUD)",
+    # === Live Coding (Tabel 4.11) ===
+    "LC1-1": "Pemahaman Konsep Dasar - Master fundamentals (PHP/JS/TS & SQL) + best practices",
+    "LC1-2": "Pemahaman Konsep Dasar - Solid understanding + poor implementation",
+    "LC1-3": "Pemahaman Konsep Dasar - Basic knowledge + needs improvement",
+    
+    "LC2-1": "Problem Solving & Critical Thinking - Analytical + innovative solutions",
+    "LC2-2": "Problem Solving & Critical Thinking - Logical approach + research skills",
+    "LC2-3": "Problem Solving & Critical Thinking - not so good problem solving",
+    
+    "LC3-1": "Efisiensi Kode - Clean code + optimized + scalable",
+    "LC3-2": "Efisiensi Kode - Slightly messy + readable + functional",
+    "LC3-3": "Efisiensi Kode - Functional + disorganized + needs refinement",
 
-    "HS3-1": "Framework Multi (lebih dari satu)",
-    "HS3-2": "Framework Satu",
-    "HS3-3": "Tidak Menguasai Framework",
-
-    "HS4-1": "Unit Test Mahir (berpengalaman implementasi)",
-    "HS4-2": "Unit Test Cukup (pernah/paham konsep)",
-    "HS4-3": "Tidak Pernah Unit Test",
-
-    "HS5-1": "SDLC Bagus (Agile/Scrum & Waterfall)",
-    "HS5-2": "SDLC Kurang (hanya Waterfall)",
-    "HS5-3": "Tidak Paham SDLC",
-
-    "HS6-1": "Design Pattern Mahir (MVC, DDD, dsb.)",
-    "HS6-2": "Design Pattern Cukup (paham konsep)",
-    "HS6-3": "Tidak Paham Design Pattern",
-
-    "HS7-1": "Microservice Implementasi + Paham Konsep",
-    "HS7-2": "Microservice Paham Konsep",
-    "HS7-3": "Tidak Pernah Microservice (mau belajar)",
-
-    "HS8-1": "Docker Mahir (deploy & CI/CD)",
-    "HS8-2": "Docker Pernah (local dev/project)",
-    "HS8-3": "Tidak Pernah Docker (mau belajar)",
-
-    "HS9-1": "CI/CD Mahir (build pipeline)",
-    "HS9-2": "CI/CD Pernah (pipeline sederhana)",
-    "HS9-3": "Tidak Pernah CI/CD",
-
-    "HS10-1": "Cloud Mahir (berbagai platform)",
-    "HS10-2": "Cloud Pernah (pengalaman terbatas)",
-    "HS10-3": "Tidak Pernah Cloud (mau belajar)",
-
-    "HS11-1": "Payment Gateway Mahir (API integrasi)",
-    "HS11-2": "Payment Gateway Terbatas",
-    "HS11-3": "Tidak Pernah Payment Gateway",
-
-    # === Soft Skills ===
-    "SS1-1": "Problem Solving Sangat Baik",
-    "SS1-2": "Problem Solving Baik",
-    "SS1-3": "Problem Solving Lemah",
-
-    "SS2-1": "Komunikasi Bagus",
-    "SS2-2": "Komunikasi Cukup",
-    "SS2-3": "Komunikasi Kurang",
-
-    "SS3-1": "Adaptasi Bagus (langsung efektif)",
-    "SS3-2": "Adaptasi Menyesuaikan (<1 minggu)",
-    "SS3-3": "Adaptasi Lambat (>2 minggu)",
-
-    # === Live Coding ===
-    "LC1-1": "Menguasai Dasar Programming (PHP/JS/TS & MySQL)",
-    "LC1-2": "Dasar Programming Kurang",
-
-    "LC2-1": "Problem Solving & Critical Thinking Oke",
-    "LC2-2": "Problem Solving Lemah",
-
-    "LC3-1": "Kode Efisien & Rapi",
-    "LC3-2": "Kode Cukup Rapi",
-    "LC3-3": "Kode Tidak Efisien",
-
-    # === Nilai Tambahan ===
-    "FT1-1": "Development Tools Banyak",
-    "FT1-2": "Development Tools Terbatas",
-
-    "FT2-1": "Jam Aktif Pagi-Sore (sesuai tim)",
-    "FT2-2": "Jam Aktif Malam (kurang fleksibel)",
-
-    "FT3-1": "Career Path Konsisten di IT",
-    "FT3-2": "Career Path Tidak Konsisten",
-
-    "FT4-1": "Ada Sertifikasi Relevan",
-    "FT4-2": "Tidak Ada Sertifikasi",
+    # === Nilai Tambahan (Tabel 4.12) ===
+    "FT1-1": "Development Tools - Mahir berbagai tools (Laragon, VSCode, debugging, dll)",
+    "FT1-2": "Development Tools - Tools terbatas atau standard",
+    
+    "FT2-1": "Fleksibilitas Jam Kerja - Sesuai kebutuhan tim (pagi-sore)",
+    "FT2-2": "Fleksibilitas Jam Kerja - Kurang fleksibel (hanya malam)",
+    
+    "FT3-1": "Konsistensi Career Path - Konsisten di bidang IT",
+    "FT3-2": "Konsistensi Career Path - Tidak konsisten atau career change",
+    
+    "FT4-1": "Sertifikasi - Ada sertifikasi relevan + sesuai skill", 
+    "FT4-2": "Sertifikasi - Tidak ada sertifikasi relevan",
 }
 
+# Hard Skill Scoring berdasarkan bobot pada Tabel 4.9
 HS_SCORING = {
-    "HS1-1": 5, "HS1-2": 3, "HS1-3": 0,
-    "HS2-1": 5, "HS2-2": 3, "HS2-3": 1,
-    "HS3-3": 5, "HS3-2": 3, "HS3-3": 1,
-    "HS4-1": 5, "HS4-2": 1, "HS4-3": 0,
-    "HS5-1": 5, "HS5-2": 1, "HS5-3": 0,
-    "HS6-1": 5, "HS6-2": 3, "HS6-3": 0,
-    "HS7-1": 5, "HS7-2": 3, "HS7-3": 1,
-    "HS8-1": 5, "HS8-2": 3, "HS8-3": 0,
-    "HS9-1": 5, "HS9-2": 3, "HS9-3": 0,
-    "HS10-1": 5, "HS10-2": 3, "HS10-3": 0,
-    "HS11-1": 5, "HS11-2": 1, "HS11-3": 0,
+    # Bobot 3 = Expert
+    "HS1-1": 3, "HS2-1": 3, "HS3-1": 3, "HS4-1": 3, "HS5-1": 3, 
+    "HS6-1": 3, "HS7-1": 3, "HS8-1": 3, "HS9-1": 3, "HS10-1": 3, "HS11-1": 3,
+    
+    # Bobot 2 = Intermediate
+    "HS1-2": 2, "HS2-2": 2, "HS3-2": 2, "HS4-2": 2, "HS5-2": 2,
+    "HS6-2": 2, "HS7-2": 2, "HS8-2": 2, "HS9-2": 2, "HS10-2": 2, "HS11-2": 2,
+    
+    # Bobot 1 = Basic
+    "HS1-3": 1, "HS2-3": 1, "HS3-3": 1, "HS4-3": 1, "HS5-3": 1,
+    "HS6-3": 1, "HS7-3": 1, "HS8-3": 1, "HS9-3": 1, "HS10-3": 1, "HS11-3": 1,
 }
+
+# Mandatory factors untuk posisi (berdasarkan sub-bab 4.2.2 point 2)
+MANDATORY_FACTORS = {
+    "junior": ["HS1", "HS2", "HS5", "HS6"],  # Programming, MySQL, SDLC, Design Pattern
+    "middle": ["HS1", "HS2", "HS3", "HS4", "HS5", "HS6", "HS8", "HS9"]  # Semua kecuali HS7, HS10, HS11
+}
+
+# Threshold untuk hard skill berdasarkan Tabel 4.15 
+HARDSKILL_THRESHOLD = {
+    "junior": {"min": 11, "max": 20},
+    "middle": {"min": 21, "max": 33}
+}
+
+# HS_SCORING = {
+#     "HS1-1": 5, "HS1-2": 3, "HS1-3": 0,
+#     "HS2-1": 5, "HS2-2": 3, "HS2-3": 1,
+#     "HS3-3": 5, "HS3-2": 3, "HS3-3": 1,
+#     "HS4-1": 5, "HS4-2": 1, "HS4-3": 0,
+#     "HS5-1": 5, "HS5-2": 1, "HS5-3": 0,
+#     "HS6-1": 5, "HS6-2": 3, "HS6-3": 0,
+#     "HS7-1": 5, "HS7-2": 3, "HS7-3": 1,
+#     "HS8-1": 5, "HS8-2": 3, "HS8-3": 0,
+#     "HS9-1": 5, "HS9-2": 3, "HS9-3": 0,
+#     "HS10-1": 5, "HS10-2": 3, "HS10-3": 0,
+#     "HS11-1": 5, "HS11-2": 1, "HS11-3": 0,
+# }

@@ -3,15 +3,63 @@ from facts import *
 from rules import RecruitmentEngine
 from ui import ask_question, collect_candidate_info
 from report import generate_report
-from mappings import MAPPING, HS_SCORING
+from mappings import MAPPING, HS_SCORING, MANDATORY_FACTORS
+
+def calculate_hardskill_score(answers):
+    """Hitung skor hard skill berdasarkan jawaban"""
+    hs_questions = [
+        "Hard Skill - Pemrograman", "Hard Skill - Database MySQL", 
+        "Hard Skill - Framework", "Hard Skill - Unit Test",
+        "Hard Skill - SDLC", "Hard Skill - Design Pattern", 
+        "Hard Skill - Microservice", "Hard Skill - Docker", 
+        "Hard Skill - CI/CD", "Hard Skill - Cloud", 
+        "Hard Skill - Payment Gateway"
+    ]
+    
+    total_score = 0
+    factor_scores = {}
+    
+    for i, q in enumerate(hs_questions, 1):
+        if q in answers:
+            kode = answers[q]["kode"]
+            score = HS_SCORING.get(kode, 0)
+            total_score += score
+            factor_scores[f"HS{i}"] = {"kode": kode, "score": score}
+    
+    return total_score, factor_scores
+
+def check_mandatory_factors(factor_scores, posisi):
+    """Cek apakah mandatory factors terpenuhi"""
+    mandatory = MANDATORY_FACTORS.get(posisi, [])
+    mandatory_junior = True
+    mandatory_middle = True
+    
+    # Check junior mandatory factors
+    for factor in MANDATORY_FACTORS["junior"]:
+        if factor in factor_scores:
+            if factor_scores[factor]["score"] < 1:  # Bobot harus >= 1
+                mandatory_junior = False
+                break
+    
+    # Check middle mandatory factors  
+    for factor in MANDATORY_FACTORS["middle"]:
+        if factor in factor_scores:
+            if factor_scores[factor]["score"] < 1:  # Bobot harus >= 1
+                mandatory_middle = False
+                break
+    
+    return mandatory_junior, mandatory_middle
 
 def main():
+    print("=== RULE-BASED EXPERT SYSTEM ===")
+    print("=== SELEKSI KANDIDAT FULLSTACK DEVELOPER ===\n")
+    
     # 1. Input kandidat
     info = collect_candidate_info()
 
-    # 2. Pertanyaan contoh (nanti diisi semua sesuai tabel)
+    # 2. Pertanyaan sesuai dengan tabel fakta dari Bab 4
     questions = {
-        # === Screening ===
+        # === Screening (Tabel 4.8) ===
         "Screening - Personality": {
             "A": {"text": MAPPING["FS1-1"], "kode": "FS1-1"},
             "B": {"text": MAPPING["FS1-2"], "kode": "FS1-2"},
@@ -23,7 +71,7 @@ def main():
             "C": {"text": MAPPING["FS2-3"], "kode": "FS2-3"},
         },
 
-        # === Hard Skills ===
+        # === Hard Skills (Tabel 4.9) ===
         "Hard Skill - Pemrograman": {
             "A": {"text": MAPPING["HS1-1"], "kode": "HS1-1"},
             "B": {"text": MAPPING["HS1-2"], "kode": "HS1-2"},
@@ -80,7 +128,7 @@ def main():
             "C": {"text": MAPPING["HS11-3"], "kode": "HS11-3"},
         },
 
-        # === Soft Skills ===
+        # === Soft Skills (Tabel 4.10) ===
         "Soft Skill - Problem Solving": {
             "A": {"text": MAPPING["SS1-1"], "kode": "SS1-1"},
             "B": {"text": MAPPING["SS1-2"], "kode": "SS1-2"},
@@ -97,14 +145,16 @@ def main():
             "C": {"text": MAPPING["SS3-3"], "kode": "SS3-3"},
         },
 
-        # === Live Coding ===
+        # === Live Coding (Tabel 4.11) ===
         "Live Coding - Dasar Pemrograman": {
             "A": {"text": MAPPING["LC1-1"], "kode": "LC1-1"},
             "B": {"text": MAPPING["LC1-2"], "kode": "LC1-2"},
+            "C": {"text": MAPPING["LC1-3"], "kode": "LC1-3"},
         },
         "Live Coding - Problem Solving": {
             "A": {"text": MAPPING["LC2-1"], "kode": "LC2-1"},
             "B": {"text": MAPPING["LC2-2"], "kode": "LC2-2"},
+            "C": {"text": MAPPING["LC2-3"], "kode": "LC2-3"},
         },
         "Live Coding - Kualitas Kode": {
             "A": {"text": MAPPING["LC3-1"], "kode": "LC3-1"},
@@ -112,7 +162,7 @@ def main():
             "C": {"text": MAPPING["LC3-3"], "kode": "LC3-3"},
         },
 
-        # === Faktor Tambahan ===
+        # === Faktor Tambahan (Tabel 4.12) ===
         "Faktor Tambahan - Development Tools": {
             "A": {"text": MAPPING["FT1-1"], "kode": "FT1-1"},
             "B": {"text": MAPPING["FT1-2"], "kode": "FT1-2"},
@@ -131,82 +181,70 @@ def main():
         },
     }
 
+    # 3. Collect answers
     answers = {}
-    for q, ch in questions.items():
-        answers[q] = ask_question(q, ch)
-    # try:
-    #     for q, ch in questions.items():
-    #         print(f"\nMemproses pertanyaan: {q}")
-    #         answers[q] = ask_question(q, ch)
-    #         print(f"✓ Jawaban tersimpan: {answers[q]}")
-    # except Exception as e:
-    #     print(f"ERROR saat mengumpulkan jawaban: {e}")
-    #     print(f"Answers yang sudah terkumpul: {list(answers.keys())}")
-    #     return
+    print("\n=== MULAI ASSESSMENT ===\n")
+    
+    try:
+        for q, choices in questions.items():
+            answers[q] = ask_question(q, choices)
+    except Exception as e:
+        print(f"ERROR saat mengumpulkan jawaban: {e}")
+        return
 
-    # 3. Jalankan RBES
+    # 4. Hitung skor dan mandatory factors
+    hs_score, factor_scores = calculate_hardskill_score(answers)
+    mandatory_junior, mandatory_middle = check_mandatory_factors(factor_scores, info["posisi"])
+    
+    print(f"\n=== HASIL PENILAIAN ===")
+    print(f"Total Hard Skill Score: {hs_score}")
+    print(f"Mandatory Junior: {'✓' if mandatory_junior else '✗'}")
+    print(f"Mandatory Middle: {'✓' if mandatory_middle else '✗'}")
+
+    # 5. Jalankan RBES dengan Dual Process
     engine = RecruitmentEngine()
     engine.reset()
-    engine.results = []   # tempat nyimpen hasil keputusan
     
-    # inisialisasi flag livecoding
-    engine.declare(Fact(FA13=False), Fact(FA14=False), Fact(FA15=False))
-    # inisialisasi flag softskill
-    engine.declare(Fact(FA10=False), Fact(FA11=False))
-    # inisialisasi flag tambahan
-    engine.declare(Fact(FA16=False), Fact(FA17=False), Fact(FA18=False))
-
-    # declare kandidat
+    # Declare kandidat
     engine.declare(Candidate(nama=info["nama"], posisi=info["posisi"]))
 
-    # declare screening - PERBAIKAN: gunakan Fact() langsung
+    # Declare facts untuk Level 1: Screening
     engine.declare(Fact(FS1=answers["Screening - Personality"]["kode"]))
     engine.declare(Fact(FS2=answers["Screening - Tes Tertulis"]["kode"]))
 
-    # Hitung skor hard skill
-    hs_score = sum(
-        HS_SCORING[answers[q]["kode"]] 
-        for q in ["Hard Skill - Pemrograman", "Hard Skill - Database MySQL", "Hard Skill - Framework", "Hard Skill - Unit Test",
-        "Hard Skill - SDLC", "Hard Skill - Design Pattern", "Hard Skill - Microservice", "Hard Skill - Docker", "Hard Skill - CI/CD",
-        "Hard Skill - Cloud", "Hard Skill - Payment Gateway"] 
-        if answers[q]["kode"] in HS_SCORING
-    )
-
-    # Declare posisi dan bobot untuk hard skill rules
+    # Declare facts untuk Level 2: Hard Skills + Soft Skills
     engine.declare(Fact(posisi=info["posisi"]))
     engine.declare(Fact(bobot_total=hs_score))
-
-    # declare soft skill - PERBAIKAN: gunakan Fact() langsung
+    engine.declare(Fact(mandatory_junior=mandatory_junior))
+    engine.declare(Fact(mandatory_middle=mandatory_middle))
+    
     engine.declare(Fact(SS1=answers["Soft Skill - Problem Solving"]["kode"]))
     engine.declare(Fact(SS2=answers["Soft Skill - Komunikasi"]["kode"]))
     engine.declare(Fact(SS3=answers["Soft Skill - Adaptasi"]["kode"]))
 
-    # declare live coding - PERBAIKAN: gunakan Fact() langsung
+    # Declare facts untuk Level 3: Live Coding
     engine.declare(Fact(LC1=answers["Live Coding - Dasar Pemrograman"]["kode"]))
     engine.declare(Fact(LC2=answers["Live Coding - Problem Solving"]["kode"]))
     engine.declare(Fact(LC3=answers["Live Coding - Kualitas Kode"]["kode"]))
 
-    # declare faktor tambahan - PERBAIKAN: gunakan Fact() langsung
+    # Declare facts untuk Level 4: Nilai Tambahan
     engine.declare(Fact(FT1=answers["Faktor Tambahan - Development Tools"]["kode"]))
     engine.declare(Fact(FT2=answers["Faktor Tambahan - Jam Aktif"]["kode"]))
     engine.declare(Fact(FT3=answers["Faktor Tambahan - Career Path"]["kode"]))
     engine.declare(Fact(FT4=answers["Faktor Tambahan - Sertifikasi"]["kode"]))
 
-    print("\n=== MENJALANKAN EXPERT SYSTEM ===")
+    print("\n=== MENJALANKAN DUAL PROCESS INFERENCE ===\n")
     
-    # DEBUG: Print facts sebelum run
-    from debug_facts import debug_facts
-    debug_facts(engine)
-    
+    # Run the inference engine
     engine.run()
     
-    print(f"\nTotal rules triggered: {len(engine.triggered_rules)}")
-    print(f"Total results: {len(engine.results)}")
+    print(f"\n=== RANGKUMAN PROSES ===")
+    print(f"Total rules triggered: {len(engine.triggered_rules)}")
+    print(f"Level status: {engine.level_status}")
 
-    # 4. Simpan hasil
-    results = engine.results if hasattr(engine, "results") else []
-    
-    generate_report(info, answers, engine.results, engine.triggered_rules, hs_score)
+    # 6. Generate report
+    generate_report(info, answers, engine.results, engine.triggered_rules, 
+                   hs_score, factor_scores, engine.level_status)
 
 if __name__ == "__main__":
     main()

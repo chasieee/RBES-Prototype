@@ -9,7 +9,7 @@ class Screening(Fact):
     pass
 
 class HardSkill(Fact):
-    """Fakta Hard Skill"""
+    """Fakta Hard Skill dengan mandatory factor checking"""
     pass
 
 class SoftSkill(Fact):
@@ -26,4 +26,9 @@ class Tambahan(Fact):
 
 class Result(Fact):
     """Kesimpulan akhir"""
+    pass
+
+# Flag facts untuk kontrol alur dual process
+class BinaryFlag(Fact):
+    """Flag untuk binary process dan gate checking"""
     pass
